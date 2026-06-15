@@ -1,4 +1,4 @@
-export default function QuestionCard({ question, selectedCode, onSelect, onNext, onBack, questionIndex, total }) {
+export default function QuestionCard({ question, selectedCode, selectedComment, onSelect, onNext, onBack, questionIndex, total }) {
   const canProceed = selectedCode !== null
 
   return (
@@ -58,7 +58,7 @@ export default function QuestionCard({ question, selectedCode, onSelect, onNext,
         </div>
 
         {/* Options */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
           {question.options.map((option) => {
             const isSelected = selectedCode === option.code
             return (
@@ -123,6 +123,45 @@ export default function QuestionCard({ question, selectedCode, onSelect, onNext,
               </div>
             )
           })}
+        </div>
+
+        {/* System commentary */}
+        <div style={{
+          minHeight: '52px',
+          marginBottom: '16px',
+          padding: '12px 14px',
+          borderRadius: '3px',
+          background: selectedComment ? '#f8f9fb' : 'transparent',
+          border: selectedComment ? '1px solid #e4e8f0' : '1px solid transparent',
+          transition: 'background 0.2s, border-color 0.2s',
+        }}>
+          {selectedComment && (
+            <div style={{
+              display: 'flex',
+              gap: '10px',
+              alignItems: 'flex-start',
+            }}>
+              <span style={{
+                fontSize: '9px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                color: '#1a5fb4',
+                fontWeight: '600',
+                whiteSpace: 'nowrap',
+                paddingTop: '1px',
+              }}>
+                ATTEND
+              </span>
+              <span style={{
+                fontSize: '12px',
+                color: '#5a6a82',
+                lineHeight: '1.6',
+                fontStyle: 'italic',
+              }}>
+                {selectedComment}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Actions */}
