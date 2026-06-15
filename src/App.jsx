@@ -143,16 +143,17 @@ export default function App() {
 
         {/* Question flow */}
         {screen === SCREENS.QUESTIONS && questions.length > 0 && (
-          <QuestionCard
-            question={questions[currentIndex]}
-            selectedCode={selectedOption?.code ?? null}
-            onSelect={handleSelect}
-            onNext={handleNext}
-            onBack={handleBack}
-            questionIndex={currentIndex}
-            total={questions.length}
-          />
-        )}
+  <QuestionCard
+    question={questions[currentIndex]}
+    selectedCode={selectedOption?.code ?? null}
+    selectedComment={selectedOption?.comment ?? null}
+    onSelect={handleSelect}
+    onNext={handleNext}
+    onBack={handleBack}
+    questionIndex={currentIndex}
+    total={questions.length}
+  />
+)}
 
         {/* Verdict screen */}
         {screen === SCREENS.VERDICT && result && (
