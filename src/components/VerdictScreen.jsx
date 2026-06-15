@@ -19,32 +19,32 @@ export default function VerdictScreen({ result, onRestart }) {
   const [visibleLines, setVisibleLines] = useState(0)
 
   useEffect(() => {
-    // Progress bar: goes to 100 over 3 seconds
+    // Progress bar: goes to 100 over 6.5 seconds
     const progressInterval = setInterval(() => {
-      setProgress((p) => {
-        if (p >= 100) {
-          clearInterval(progressInterval)
-          return 100
-        }
-        return p + 2
-      })
-    }, 60)
+  setProgress((p) => {
+    if (p >= 100) {
+      clearInterval(progressInterval)
+      return 100
+    }
+    return p + 1
+  })
+}, 60)
 
-    // Terminal lines: one every 280ms
-    const lineInterval = setInterval(() => {
-      setVisibleLines((v) => {
-        if (v >= PROCESSING_LINES.length) {
-          clearInterval(lineInterval)
-          return v
-        }
-        return v + 1
-      })
-    }, 280)
+// Terminal lines: one every 550ms
+const lineInterval = setInterval(() => {
+  setVisibleLines((v) => {
+    if (v >= PROCESSING_LINES.length) {
+      clearInterval(lineInterval)
+      return v
+    }
+    return v + 1
+  })
+}, 550)
 
-    // Reveal verdict after 3.2 seconds
-    const revealTimer = setTimeout(() => {
-      setPhase('reveal')
-    }, 3200)
+// Reveal verdict after 6.5 seconds
+const revealTimer = setTimeout(() => {
+  setPhase('reveal')
+}, 6500)
 
     return () => {
       clearInterval(progressInterval)
