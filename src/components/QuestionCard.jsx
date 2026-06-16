@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import IRISAvatar from './IRISAvatar'
 
 export default function QuestionCard({
@@ -11,7 +12,14 @@ export default function QuestionCard({
   questionIndex,
   total,
 }) {
-  const canProceed = selectedCode !== null
+  const [typingDone, setTypingDone] = useState(false)
+  const canProceed = selectedCode !== null && typingDone
+
+  // Reset typing lock when comment changes
+  const handleSelect = (option) => {
+    setTypingDone(false)
+    onSelect(option)
+  }
 
   return (
     <div style={{
@@ -81,7 +89,7 @@ export default function QuestionCard({
             return (
               <div
                 key={option.code}
-                onClick={() => onSelect(option)}
+                onClick={() => handleSelect(option)}
                 style={{
                   display: 'flex',
                   alignItems: 'flex-start',
@@ -142,23 +150,31 @@ export default function QuestionCard({
           })}
         </div>
 
-        {/* IRIS commentary */}
-        <div style={{
-          padding: '14px 16px',
-          borderRadius: '3px',
-          background: selectedComment ? '#f8f9fb' : 'transparent',
-          border: `1px solid ${selectedComment ? '#e4e8f0' : 'transparent'}`,
-          marginBottom: '20px',
-          minHeight: '56px',
-          transition: 'background 0.2s, border-color 0.2s',
-        }}>
-          {selectedComment && (
+        {/* IRIS speech bubble */}
+        {selectedComment && (
+          <div style={{ marginBottom: '20px' }}>
             <IRISAvatar
               mood={selectedMood || 'neutral'}
               text={selectedComment}
+              size="normal"
+              onTypingComplete={() => setTypingDone(true)}
             />
-          )}
-        </div>
+          </div>
+        )}
+
+        {/* Continue locked message */}
+        {selectedCode && !typingDone && (
+          <div style={{
+            fontSize: '10px',
+            color: '#b0bcd0',
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+            textAlign: 'right',
+            marginBottom: '12px',
+          }}>
+            Please wait for IRIS to finish speaking.
+          </div>
+        )}
 
         {/* Actions */}
         <div style={{
