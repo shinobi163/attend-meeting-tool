@@ -1,4 +1,16 @@
-export default function QuestionCard({ question, selectedCode, selectedComment, onSelect, onNext, onBack, questionIndex, total }) {
+import IRISAvatar from './IRISAvatar'
+
+export default function QuestionCard({
+  question,
+  selectedCode,
+  selectedComment,
+  selectedMood,
+  onSelect,
+  onNext,
+  onBack,
+  questionIndex,
+  total,
+}) {
   const canProceed = selectedCode !== null
 
   return (
@@ -58,7 +70,12 @@ export default function QuestionCard({ question, selectedCode, selectedComment, 
         </div>
 
         {/* Options */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px',
+          marginBottom: '20px',
+        }}>
           {question.options.map((option) => {
             const isSelected = selectedCode === option.code
             return (
@@ -125,42 +142,21 @@ export default function QuestionCard({ question, selectedCode, selectedComment, 
           })}
         </div>
 
-        {/* System commentary */}
+        {/* IRIS commentary */}
         <div style={{
-          minHeight: '52px',
-          marginBottom: '16px',
-          padding: '12px 14px',
+          padding: '14px 16px',
           borderRadius: '3px',
           background: selectedComment ? '#f8f9fb' : 'transparent',
-          border: selectedComment ? '1px solid #e4e8f0' : '1px solid transparent',
+          border: `1px solid ${selectedComment ? '#e4e8f0' : 'transparent'}`,
+          marginBottom: '20px',
+          minHeight: '56px',
           transition: 'background 0.2s, border-color 0.2s',
         }}>
           {selectedComment && (
-            <div style={{
-              display: 'flex',
-              gap: '10px',
-              alignItems: 'flex-start',
-            }}>
-              <span style={{
-                fontSize: '9px',
-                textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                color: '#1a5fb4',
-                fontWeight: '600',
-                whiteSpace: 'nowrap',
-                paddingTop: '1px',
-              }}>
-                ATTEND
-              </span>
-              <span style={{
-                fontSize: '12px',
-                color: '#5a6a82',
-                lineHeight: '1.6',
-                fontStyle: 'italic',
-              }}>
-                {selectedComment}
-              </span>
-            </div>
+            <IRISAvatar
+              mood={selectedMood || 'neutral'}
+              text={selectedComment}
+            />
           )}
         </div>
 
