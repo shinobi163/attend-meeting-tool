@@ -1,6 +1,3 @@
-// answers: array of 10 selected option objects, each with a `score` field (0–3)
-// Max possible score: 30. Threshold for YES: 20.
-
 const YES_THRESHOLD = 20
 
 const YES_VERDICTS = [
@@ -28,7 +25,6 @@ export function scoreAnswers(answers) {
   const total = answers.reduce((sum, a) => sum + (a?.score ?? 0), 0)
   const failed = answers.filter((a) => (a?.score ?? 0) === 0).length
   const verdict = total >= YES_THRESHOLD ? 'YES' : 'NO'
-
   const riskScore = Math.round(((30 - total) / 30) * 100)
 
   let classification
