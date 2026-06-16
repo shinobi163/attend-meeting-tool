@@ -42,15 +42,18 @@ export default function App() {
   const [result, setResult] = useState(null)
   const [introLineIndex, setIntroLineIndex] = useState(0)
   const [introComplete, setIntroComplete] = useState(false)
+  const [introTypingDone, setIntroTypingDone] = useState(false)
 
   function startIntro() {
     setIntroLineIndex(0)
     setIntroComplete(false)
+    setIntroTypingDone(false)
     setScreen(SCREENS.INTRO)
   }
 
   function handleIntroAdvance() {
     if (introLineIndex < IRIS_INTRO_LINES.length - 1) {
+      setIntroTypingDone(false)
       setIntroLineIndex((i) => i + 1)
     } else {
       setIntroComplete(true)
@@ -113,6 +116,7 @@ export default function App() {
     setResult(null)
     setIntroLineIndex(0)
     setIntroComplete(false)
+    setIntroTypingDone(false)
   }
 
   const currentMood = selectedOption ? getMood(selectedOption.score) : 'neutral'
@@ -223,20 +227,21 @@ export default function App() {
             </div>
 
             <div style={{ padding: '32px 24px 28px' }}>
-              <div style={{ marginBottom: '32px' }}>
+              <div style={{ marginBottom: '28px' }}>
                 <IRISAvatar
                   mood="neutral"
                   text={IRIS_INTRO_LINES[introLineIndex]}
                   size="large"
+                  onTypingComplete={() => setIntroTypingDone(true)}
                 />
               </div>
 
-              {/* Line progress dots */}
+              {/* Progress dots */}
               <div style={{
                 display: 'flex',
                 gap: '6px',
                 marginBottom: '28px',
-                paddingLeft: '78px',
+                paddingLeft: '88px',
               }}>
                 {IRIS_INTRO_LINES.map((_, i) => (
                   <div
@@ -267,15 +272,18 @@ export default function App() {
                 }}>
                   {introComplete
                     ? 'IRIS is ready.'
-                    : `Statement ${introLineIndex + 1} of ${IRIS_INTRO_LINES.length}`}
+                    : introTypingDone
+                    ? `Statement ${introLineIndex + 1} of ${IRIS_INTRO_LINES.length}`
+                    : 'Please wait...'}
                 </span>
 
                 {!introComplete ? (
                   <button
                     onClick={handleIntroAdvance}
+                    disabled={!introTypingDone}
                     style={{
-                      background: '#1a5fb4',
-                      color: '#ffffff',
+                      background: introTypingDone ? '#1a5fb4' : '#e4e8f0',
+                      color: introTypingDone ? '#ffffff' : '#b0bcd0',
                       border: 'none',
                       borderRadius: '3px',
                       padding: '10px 28px',
@@ -283,7 +291,8 @@ export default function App() {
                       letterSpacing: '0.07em',
                       textTransform: 'uppercase',
                       fontWeight: '600',
-                      cursor: 'pointer',
+                      cursor: introTypingDone ? 'pointer' : 'default',
+                      transition: 'background 0.15s, color 0.15s',
                     }}
                   >
                     Continue
