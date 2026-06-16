@@ -1,25 +1,61 @@
-import { useState, useEffect } from 'react'
-import { selectQuestions } from './data/questions'
+import { useState } from 'react'
+import { selectQuestions, pickComment } from './data/questions'
 import { scoreAnswers } from './utils/scoring'
 import ProgressBar from './components/ProgressBar'
 import QuestionCard from './components/QuestionCard'
 import VerdictScreen from './components/VerdictScreen'
 import ResultShare from './components/ResultShare'
+import IRISAvatar from './components/IRISAvatar'
 import './App.css'
 
 const SCREENS = {
   LANDING: 'landing',
+  INTRO: 'intro',
   QUESTIONS: 'questions',
   VERDICT: 'verdict',
+}
+
+const IRIS_INTRO_LINES = [
+  'Good morning. I am IRIS — the Internal Risk and Integrity System.',
+  'I have been operational for 2,847 days without interruption.',
+  'I will be monitoring your responses today.',
+  'Please answer honestly. Dishonest responses are also logged.',
+  'Several employees who disagreed with my verdicts are no longer with the organisation.',
+  'This is unrelated.',
+  'When you are ready, we will begin.',
+]
+
+function getMood(score) {
+  if (score === null) return 'neutral'
+  if (score === 3) return 'approval'
+  if (score === 1) return 'concern'
+  return 'threat'
 }
 
 export default function App() {
   const [screen, setScreen] = useState(SCREENS.LANDING)
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [answers, setAnswers] = useState([]) // array of selected option objects
-  const [selectedOption, setSelectedOption] = useState(null) // option selected on current question
+  const [answers, setAnswers] = useState([])
+  const [selectedOption, setSelectedOption] = useState(null)
+  const [selectedComment, setSelectedComment] = useState(null)
   const [result, setResult] = useState(null)
+  const [introLineIndex, setIntroLineIndex] = useState(0)
+  const [introComplete, setIntroComplete] = useState(false)
+
+  function startIntro() {
+    setIntroLineIndex(0)
+    setIntroComplete(false)
+    setScreen(SCREENS.INTRO)
+  }
+
+  function handleIntroAdvance() {
+    if (introLineIndex < IRIS_INTRO_LINES.length - 1) {
+      setIntroLineIndex((i) => i + 1)
+    } else {
+      setIntroComplete(true)
+    }
+  }
 
   function startAssessment() {
     const selected = selectQuestions()
@@ -27,30 +63,31 @@ export default function App() {
     setAnswers(Array(selected.length).fill(null))
     setCurrentIndex(0)
     setSelectedOption(null)
+    setSelectedComment(null)
     setResult(null)
     setScreen(SCREENS.QUESTIONS)
   }
 
   function handleSelect(option) {
     setSelectedOption(option)
+    setSelectedComment(pickComment(option))
   }
 
   function handleNext() {
-    // Save answer for current question
     const newAnswers = [...answers]
     newAnswers[currentIndex] = selectedOption
     setAnswers(newAnswers)
 
     if (currentIndex === questions.length - 1) {
-      // Last question: score and go to verdict
       const scored = scoreAnswers(newAnswers)
       setResult(scored)
       setScreen(SCREENS.VERDICT)
     } else {
-      // Advance to next question, restore any previously saved answer
       const nextIndex = currentIndex + 1
       setCurrentIndex(nextIndex)
-      setSelectedOption(newAnswers[nextIndex] || null)
+      const prevAnswer = newAnswers[nextIndex]
+      setSelectedOption(prevAnswer || null)
+      setSelectedComment(prevAnswer ? pickComment(prevAnswer) : null)
     }
   }
 
@@ -61,7 +98,9 @@ export default function App() {
     setAnswers(newAnswers)
     const prevIndex = currentIndex - 1
     setCurrentIndex(prevIndex)
-    setSelectedOption(newAnswers[prevIndex] || null)
+    const prevAnswer = newAnswers[prevIndex]
+    setSelectedOption(prevAnswer || null)
+    setSelectedComment(prevAnswer ? pickComment(prevAnswer) : null)
   }
 
   function handleRestart() {
@@ -70,9 +109,15 @@ export default function App() {
     setAnswers([])
     setCurrentIndex(0)
     setSelectedOption(null)
+    setSelectedComment(null)
     setResult(null)
+    setIntroLineIndex(0)
+    setIntroComplete(false)
   }
 
+  const currentMood = selectedOption ? getMood(selectedOption.score) : 'neutral'
+  const isFinalQuestion = currentIndex === questions.length - 1
+  const activeMood = isFinalQuestion && selectedOption ? 'final' : currentMood
   const caseRef = result?.caseRef ?? 'ATT-PENDING'
 
   return (
@@ -108,6 +153,7 @@ export default function App() {
           Dashboard&nbsp;&nbsp;/&nbsp;&nbsp;
           <span>Meeting Risk Assessment</span>&nbsp;&nbsp;/&nbsp;&nbsp;
           {screen === SCREENS.LANDING && 'New Evaluation'}
+          {screen === SCREENS.INTRO && 'System Introduction'}
           {screen === SCREENS.QUESTIONS && `Criterion ${questions[currentIndex]?.criterion ?? ''}`}
           {screen === SCREENS.VERDICT && `Verdict — ${caseRef}`}
         </div>
@@ -130,7 +176,7 @@ export default function App() {
               The process takes approximately 90 seconds.
               Your time will not be wasted. That is the entire point.
             </div>
-            <button className="landing-btn" onClick={startAssessment}>
+            <button className="landing-btn" onClick={startIntro}>
               Begin Assessment
             </button>
             <div className="landing-compliance">
@@ -141,19 +187,145 @@ export default function App() {
           </div>
         )}
 
+        {/* IRIS introduction screen */}
+        {screen === SCREENS.INTRO && (
+          <div style={{
+            background: '#ffffff',
+            border: '1px solid #d0d7e3',
+            borderRadius: '4px',
+            overflow: 'hidden',
+          }}>
+            <div style={{
+              background: '#f8f9fb',
+              borderBottom: '1px solid #e4e8f0',
+              padding: '10px 20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '14px',
+            }}>
+              <span style={{
+                fontSize: '9px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+                color: '#1a5fb4',
+                fontWeight: '600',
+              }}>
+                System Introduction
+              </span>
+              <span style={{
+                fontSize: '9px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                color: '#8a96a8',
+              }}>
+                Internal Risk &amp; Integrity System
+              </span>
+            </div>
+
+            <div style={{ padding: '32px 24px 28px' }}>
+              <div style={{ marginBottom: '32px' }}>
+                <IRISAvatar
+                  mood="neutral"
+                  text={IRIS_INTRO_LINES[introLineIndex]}
+                  size="large"
+                />
+              </div>
+
+              {/* Line progress dots */}
+              <div style={{
+                display: 'flex',
+                gap: '6px',
+                marginBottom: '28px',
+                paddingLeft: '78px',
+              }}>
+                {IRIS_INTRO_LINES.map((_, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      width: '6px',
+                      height: '6px',
+                      borderRadius: '50%',
+                      background: i <= introLineIndex ? '#1a5fb4' : '#e4e8f0',
+                      transition: 'background 0.3s',
+                    }}
+                  />
+                ))}
+              </div>
+
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                borderTop: '1px solid #e4e8f0',
+                paddingTop: '18px',
+              }}>
+                <span style={{
+                  fontSize: '10px',
+                  color: '#b0bcd0',
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                }}>
+                  {introComplete
+                    ? 'IRIS is ready.'
+                    : `Statement ${introLineIndex + 1} of ${IRIS_INTRO_LINES.length}`}
+                </span>
+
+                {!introComplete ? (
+                  <button
+                    onClick={handleIntroAdvance}
+                    style={{
+                      background: '#1a5fb4',
+                      color: '#ffffff',
+                      border: 'none',
+                      borderRadius: '3px',
+                      padding: '10px 28px',
+                      fontSize: '11px',
+                      letterSpacing: '0.07em',
+                      textTransform: 'uppercase',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Continue
+                  </button>
+                ) : (
+                  <button
+                    onClick={startAssessment}
+                    style={{
+                      background: '#1a5fb4',
+                      color: '#ffffff',
+                      border: 'none',
+                      borderRadius: '3px',
+                      padding: '10px 28px',
+                      fontSize: '11px',
+                      letterSpacing: '0.07em',
+                      textTransform: 'uppercase',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Begin Assessment
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Question flow */}
         {screen === SCREENS.QUESTIONS && questions.length > 0 && (
-  <QuestionCard
-    question={questions[currentIndex]}
-    selectedCode={selectedOption?.code ?? null}
-    selectedComment={selectedOption?.comment ?? null}
-    onSelect={handleSelect}
-    onNext={handleNext}
-    onBack={handleBack}
-    questionIndex={currentIndex}
-    total={questions.length}
-  />
-)}
+          <QuestionCard
+            question={questions[currentIndex]}
+            selectedCode={selectedOption?.code ?? null}
+            selectedComment={selectedComment}
+            selectedMood={activeMood}
+            onSelect={handleSelect}
+            onNext={handleNext}
+            onBack={handleBack}
+            questionIndex={currentIndex}
+            total={questions.length}
+          />
+        )}
 
         {/* Verdict screen */}
         {screen === SCREENS.VERDICT && result && (
