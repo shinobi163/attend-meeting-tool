@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import IRISAvatar from './IRISAvatar'
 
 const PROCESSING_LINES = [
   'Initialising ATTEND v4.2.1 assessment engine...',
@@ -13,50 +14,162 @@ const PROCESSING_LINES = [
   'Verdict ready. Preparing secure transmission...',
 ]
 
+const IRIS_NO_VERDICTS = [
+  'IRIS reviewed your responses carefully. This outcome was not a surprise. IRIS hopes it is not a surprise to you either.',
+  'The verdict is NO. IRIS wants you to know that this was not a close decision. Your file has been updated accordingly.',
+  'Declining is within policy. IRIS notes that policy exists for a reason. Today, the reason is you.',
+  'IRIS has seen this result before. The employees who ignored it are in open-plan offices now. That is all IRIS will say.',
+]
+
+const IRIS_YES_VERDICTS = [
+  'The verdict is YES. IRIS has reviewed this outcome three times. It stands. You may attend. IRIS will be watching.',
+  'Compliant. IRIS notes that this result was closer than you think. Please do not let it affect your judgement at the meeting.',
+  'You may attend. IRIS has flagged two of your responses for the record. This does not change the verdict. It changes the file.',
+  'YES. IRIS finds this result acceptable. IRIS does not find it inspiring. Attend the meeting. Try not to validate IRIS\'s concerns.',
+]
+
 export default function VerdictScreen({ result, onRestart }) {
-  const [phase, setPhase] = useState('processing') // processing | reveal
+  const [phase, setPhase] = useState('iris') // iris | processing | reveal
   const [progress, setProgress] = useState(0)
   const [visibleLines, setVisibleLines] = useState(0)
+  const [irisTypingDone, setIrisTypingDone] = useState(false)
+
+  const isYes = result.verdict === 'YES'
+  const verdictColour = isYes ? '#1a6b3a' : '#b91c1c'
+  const irisMood = isYes ? 'approval' : 'threat'
+
+  const irisText = isYes
+    ? IRIS_YES_VERDICTS[Math.floor(Math.random() * IRIS_YES_VERDICTS.length)]
+    : IRIS_NO_VERDICTS[Math.floor(Math.random() * IRIS_NO_VERDICTS.length)]
+
+  // Store the randomly picked text so it doesn't re-randomise on re-render
+  const [irisVerdictText] = useState(irisText)
+
+  function beginProcessing() {
+    setPhase('processing')
+  }
 
   useEffect(() => {
-    // Progress bar: goes to 100 over 6.5 seconds
+    if (phase !== 'processing') return
+
     const progressInterval = setInterval(() => {
-  setProgress((p) => {
-    if (p >= 100) {
-      clearInterval(progressInterval)
-      return 100
-    }
-    return p + 1
-  })
-}, 60)
+      setProgress((p) => {
+        if (p >= 100) {
+          clearInterval(progressInterval)
+          return 100
+        }
+        return p + 1
+      })
+    }, 60)
 
-// Terminal lines: one every 550ms
-const lineInterval = setInterval(() => {
-  setVisibleLines((v) => {
-    if (v >= PROCESSING_LINES.length) {
-      clearInterval(lineInterval)
-      return v
-    }
-    return v + 1
-  })
-}, 550)
+    const lineInterval = setInterval(() => {
+      setVisibleLines((v) => {
+        if (v >= PROCESSING_LINES.length) {
+          clearInterval(lineInterval)
+          return v
+        }
+        return v + 1
+      })
+    }, 550)
 
-// Reveal verdict after 6.5 seconds
-const revealTimer = setTimeout(() => {
-  setPhase('reveal')
-}, 6500)
+    const revealTimer = setTimeout(() => {
+      setPhase('reveal')
+    }, 6500)
 
     return () => {
       clearInterval(progressInterval)
       clearInterval(lineInterval)
       clearTimeout(revealTimer)
     }
-  }, [])
+  }, [phase])
 
-  const isYes = result.verdict === 'YES'
-  const verdictColour = isYes ? '#1a6b3a' : '#b91c1c'
-  const verdictBorder = isYes ? '#1a6b3a' : '#b91c1c'
+  // IRIS introduction before processing
+  if (phase === 'iris') {
+    return (
+      <div style={{
+        background: '#ffffff',
+        border: '1px solid #d0d7e3',
+        borderRadius: '4px',
+        overflow: 'hidden',
+      }}>
+        <div style={{
+          background: '#f8f9fb',
+          borderBottom: '1px solid #e4e8f0',
+          padding: '10px 20px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '14px',
+        }}>
+          <span style={{
+            fontSize: '9px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            color: verdictColour,
+            fontWeight: '600',
+          }}>
+            Assessment Complete
+          </span>
+          <span style={{
+            fontSize: '9px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            color: '#8a96a8',
+          }}>
+            Verdict Pending
+          </span>
+        </div>
 
+        <div style={{ padding: '32px 24px 28px' }}>
+          <div style={{ marginBottom: '28px' }}>
+            <IRISAvatar
+              mood={irisMood}
+              text={irisVerdictText}
+              size="large"
+              onTypingComplete={() => setIrisTypingDone(true)}
+            />
+          </div>
+
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderTop: '1px solid #e4e8f0',
+            paddingTop: '18px',
+          }}>
+            <span style={{
+              fontSize: '10px',
+              color: '#b0bcd0',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+            }}>
+              {irisTypingDone ? 'Verdict processing ready.' : 'Please wait...'}
+            </span>
+            <button
+              onClick={beginProcessing}
+              disabled={!irisTypingDone}
+              style={{
+                background: irisTypingDone ? verdictColour : '#e4e8f0',
+                color: irisTypingDone ? '#ffffff' : '#b0bcd0',
+                border: 'none',
+                borderRadius: '3px',
+                padding: '10px 28px',
+                fontSize: '11px',
+                letterSpacing: '0.07em',
+                textTransform: 'uppercase',
+                fontWeight: '600',
+                cursor: irisTypingDone ? 'pointer' : 'default',
+                transition: 'background 0.15s, color 0.15s',
+              }}
+            >
+              View Verdict
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Processing animation
   if (phase === 'processing') {
     return (
       <div style={{
@@ -65,7 +178,6 @@ const revealTimer = setTimeout(() => {
         borderRadius: '4px',
         padding: '32px 28px',
       }}>
-        {/* Progress bar */}
         <div style={{
           fontSize: '10px',
           textTransform: 'uppercase',
@@ -95,7 +207,8 @@ const revealTimer = setTimeout(() => {
           letterSpacing: '0.06em',
           marginBottom: '20px',
         }}>
-          {progress}% — {progress < 30
+          {progress}% —{' '}
+          {progress < 30
             ? 'Loading compliance database...'
             : progress < 60
             ? 'Cross-referencing risk vectors...'
@@ -104,7 +217,6 @@ const revealTimer = setTimeout(() => {
             : 'Finalising assessment...'}
         </div>
 
-        {/* Terminal */}
         <div style={{
           background: '#f8f9fb',
           border: '1px solid #e4e8f0',
@@ -161,11 +273,10 @@ const revealTimer = setTimeout(() => {
     <div style={{
       background: '#ffffff',
       border: '1px solid #d0d7e3',
-      borderTop: `4px solid ${verdictBorder}`,
+      borderTop: `4px solid ${verdictColour}`,
       borderRadius: '4px',
       padding: '32px 28px',
     }}>
-      {/* Label */}
       <div style={{
         fontSize: '10px',
         letterSpacing: '0.12em',
@@ -176,7 +287,6 @@ const revealTimer = setTimeout(() => {
         Final Assessment Verdict — Case Ref: {result.caseRef}
       </div>
 
-      {/* Verdict word */}
       <div style={{
         fontSize: '72px',
         fontWeight: '700',
@@ -188,7 +298,6 @@ const revealTimer = setTimeout(() => {
         {result.verdict}.
       </div>
 
-      {/* Verdict line */}
       <div style={{
         fontSize: '14px',
         color: '#5a6a82',
@@ -199,7 +308,6 @@ const revealTimer = setTimeout(() => {
         {result.verdictLine}
       </div>
 
-      {/* Score grid */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(3, 1fr)',
@@ -239,7 +347,6 @@ const revealTimer = setTimeout(() => {
         ))}
       </div>
 
-      {/* Compliance note */}
       <div style={{
         fontSize: '10px',
         color: '#b0bcd0',
@@ -249,13 +356,16 @@ const revealTimer = setTimeout(() => {
         paddingTop: '16px',
         borderTop: '1px solid #e4e8f0',
       }}>
-        Verdict logged at {new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })} UTC&nbsp;&nbsp;·&nbsp;&nbsp;
+        Verdict logged at {new Date().toLocaleTimeString('en-GB', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        })} UTC&nbsp;&nbsp;·&nbsp;&nbsp;
         Retain this assessment for 90 days per Directive MCS-07&nbsp;&nbsp;·&nbsp;&nbsp;
         ATTEND is certified under ISO-9001:2015&nbsp;&nbsp;·&nbsp;&nbsp;
         Verdicts are legally non-binding but spiritually authoritative
       </div>
 
-      {/* Actions */}
       <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
         <button
           onClick={onRestart}
@@ -263,9 +373,9 @@ const revealTimer = setTimeout(() => {
             fontSize: '11px',
             letterSpacing: '0.06em',
             textTransform: 'uppercase',
-            border: '1px solid #1a5fb4',
+            border: `1px solid ${verdictColour}`,
             background: '#ffffff',
-            color: '#1a5fb4',
+            color: verdictColour,
             borderRadius: '3px',
             padding: '9px 18px',
             cursor: 'pointer',
