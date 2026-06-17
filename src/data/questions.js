@@ -1054,3 +1054,437 @@ export const questionBank = [
           ],
         },
         {
+          code: 'B',
+          text: 'The invite was sent at 11:47pm. The subject line contains an exclamation mark.',
+          score: 0,
+          comments: [
+            '11:47pm. Exclamation mark. IRIS notes that these two data points together constitute a risk profile. Something happened yesterday evening. This meeting is about it.',
+            'Late night invite. Exclamation mark in the subject line. IRIS notes that exclamation marks in professional contexts after 11pm are rarely expressions of enthusiasm.',
+            'IRIS has reviewed the invite metadata. The time and punctuation together suggest this meeting was not planned. It was triggered. IRIS notes that triggered meetings have a distinct register.',
+          ],
+        },
+        {
+          code: 'C',
+          text: 'Someone on this invite has replied-all in the last 72 hours. The tone was not collegial.',
+          score: 0,
+          comments: [
+            'A recent reply-all. Non-collegial tone. The person who sent it is on this invite. The meeting has not been structured to address the reply-all. It will come up anyway.',
+            'IRIS notes that the reply-all was a communication. The meeting is also a communication. They are now in sequence. IRIS predicts the meeting will contain the subtext of the reply-all.',
+            'Someone demonstrated poor email governance 72 hours ago. They will be in the room today. No pre-meeting intervention has been scheduled. IRIS notes this is optimistic.',
+          ],
+        },
+        {
+          code: 'D',
+          text: 'This meeting was described internally as "a chance to align." Prior alignments have not held.',
+          score: 0,
+          comments: [
+            'Prior alignments failed. A new alignment is being attempted. The approach has not changed. IRIS notes that this is the definition of something, but not of a plan.',
+            '"A chance to align." IRIS has reviewed the previous alignment attempts. They produced alignment. The alignment was temporary. IRIS predicts the duration of today\'s alignment.',
+            'IRIS notes that alignment attempted by the same people in the same format that produced the previous failed alignments is expected to produce similar results. IRIS notes this without optimism.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'q8b',
+      criterion: '8.1',
+      category: 'Psychological Safety Index',
+      text: 'Is there a known interpersonal conflict between any two attendees on this invite?',
+      options: [
+        {
+          code: 'A',
+          text: 'No. All attendees have a functional professional relationship.',
+          score: 3,
+          comments: [
+            'No known conflicts. Functional relationships confirmed. IRIS notes the qualifier "known" and proceeds.',
+            'Interpersonal compliance confirmed. IRIS notes that unknown conflicts are outside the scope of this assessment. Unknown conflicts are not outside the scope of meetings.',
+            'All relationships functional. IRIS accepts this. Please note that "functional" and "warm" are different categories. IRIS is not assessing warmth.',
+          ],
+        },
+        {
+          code: 'B',
+          text: 'Yes. It is being managed by ensuring they never speak directly. This meeting will test that system.',
+          score: 0,
+          comments: [
+            'The conflict management strategy relies on separation. This meeting removes the separation. IRIS notes the strategy is about to be stress-tested. IRIS does not expect it to pass.',
+            'Two people who do not speak directly are being placed in a meeting together. The person who scheduled this meeting is either unaware of the conflict or has decided to find out how it goes. IRIS will also find out.',
+            'The system for managing this conflict is about to encounter the meeting. IRIS notes that conflict management systems designed around avoidance tend to underperform in rooms.',
+          ],
+        },
+        {
+          code: 'C',
+          text: 'There is a conflict. Both parties believe it is invisible. It is not invisible.',
+          score: 0,
+          comments: [
+            'The conflict is visible to everyone except the two parties. The meeting will contain all parties. IRIS estimates a productive first 20 minutes.',
+            'Both parties believe they are concealing the conflict. They are not concealing the conflict. The meeting will allow everyone to observe this simultaneously.',
+            'IRIS notes that invisible conflicts visible to all observers are, technically, not invisible. They are simply unacknowledged. The meeting will not change this. It will demonstrate it.',
+          ],
+        },
+        {
+          code: 'D',
+          text: 'The conflict is not between two people. It is between a person and a process. The process has more institutional support.',
+          score: 0,
+          comments: [
+            'Person versus process. The process has institutional backing. IRIS has reviewed similar conflicts. IRIS is familiar with how they tend to resolve.',
+            'IRIS notes that conflicts between individuals and processes tend to end in one of two ways. Neither requires the meeting you are attending. The meeting will occur anyway.',
+            'The process is supported. The person is attending a meeting about it. IRIS notes that attending a meeting to challenge a supported process is a specific kind of optimism. IRIS respects it.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'q8c',
+      criterion: '8.1',
+      category: 'Psychological Safety Index',
+      text: 'Has this meeting been called in response to something that happened?',
+      options: [
+        {
+          code: 'A',
+          text: 'No. It is proactive and forward-looking.',
+          score: 3,
+          comments: [
+            'Proactive. Planned. Not reactive. IRIS notes that meetings scheduled because someone had a plan are among the most functional meeting types. This appears to be one.',
+            'The meeting was designed, not triggered. IRIS notes that this is the correct origin for a meeting. IRIS also notes how often meetings have a different origin.',
+            'No incident triggered this meeting. It exists because someone decided it should. IRIS approves of intentional scheduling. It is a skill.',
+          ],
+        },
+        {
+          code: 'B',
+          text: 'Yes. What happened is not referenced in the invite. Its presence is understood.',
+          score: 0,
+          comments: [
+            'Something happened. The invite does not mention it. Everyone on the invite knows. The meeting is about it. None of this will be said aloud. IRIS finds this a very advanced meeting format.',
+            'The incident is present in the room before anyone arrives. The invite does not name it. The attendees do not need the invite to name it. IRIS notes that unspoken shared context is a specific kind of risk.',
+            'IRIS notes that meetings called in response to unacknowledged incidents tend to address the incident indirectly and at length. This is less efficient than addressing it directly. It is more common.',
+          ],
+        },
+        {
+          code: 'C',
+          text: 'Yes. The phrase used was "we should probably get everyone together." The word "probably" is doing significant work.',
+          score: 0,
+          comments: [
+            '"Probably." The organiser is not certain this meeting is necessary. They scheduled it anyway. "Probably" carries more doubt than most people put in meeting invites.',
+            'IRIS notes that "probably" in a meeting rationale indicates ambivalence. The meeting has been scheduled despite the ambivalence. The ambivalence was not resolved. It is coming to the meeting.',
+            'Someone said "probably" and then scheduled a meeting. IRIS notes that "probably" should have triggered a question before a calendar invite. It did not.',
+          ],
+        },
+        {
+          code: 'D',
+          text: 'This meeting was described as routine. It is not routine. It was expedited.',
+          score: 0,
+          comments: [
+            'The meeting was expedited and described as routine. IRIS notes the gap between description and scheduling behaviour. Something happened. The invite did not say what.',
+            'Routine meetings are not expedited. This one was. IRIS notes that "routine" is being used here to manage the temperature of the invite. It has not changed the temperature of the meeting.',
+            'IRIS has reviewed the meeting\'s scheduling timeline. It was accelerated. The word "routine" was applied afterwards. IRIS finds this a specific choice. Someone made it deliberately.',
+          ],
+        },
+      ],
+    },
+  ],
+
+  // ── Criterion 9: Temporal Displacement ──
+  [
+    {
+      id: 'q9a',
+      criterion: '9.1',
+      category: 'Temporal Displacement Assessment',
+      text: 'Evaluate the scheduling context of this meeting relative to your documented focus hours.',
+      options: [
+        {
+          code: 'A',
+          text: 'The meeting falls within a designated collaboration window. No deep work is displaced.',
+          score: 3,
+          comments: [
+            'Appropriate window. No focus time displaced. IRIS notes that the meeting has been placed correctly. This implies someone looked at your calendar before scheduling. That is not always done.',
+            'Collaboration window confirmed. Deep work preserved. IRIS approves of meetings that know where they belong in a day.',
+            'The meeting occupies appropriate calendar real estate. IRIS notes that this is the correct outcome of thoughtful scheduling. IRIS also notes it is not the default outcome.',
+          ],
+        },
+        {
+          code: 'B',
+          text: 'It is scheduled across a lunch hour that was the only unbooked slot in a six-hour block.',
+          score: 0,
+          comments: [
+            'The only gap in six hours has been identified and filled. IRIS notes that someone reviewed your calendar carefully. The care was not in your favour.',
+            'The lunch slot was the target. IRIS notes that a lunch slot is not a collaboration window. It is a gap that exists for a different reason. The meeting has colonised it.',
+            'IRIS notes that scheduling in the only available slot in a six-hour block is a choice. It is also a statement. IRIS has noted the statement.',
+          ],
+        },
+        {
+          code: 'C',
+          text: 'It bisects a three-hour focus block. Recovery to deep work will require approximately 23 minutes after.',
+          score: 1,
+          comments: [
+            'The meeting interrupts a focus block. Recovery costs 23 minutes. The total cost is the meeting duration plus 23 minutes. The organiser budgeted for the meeting duration.',
+            'A 30-minute meeting with a 23-minute recovery overhead. IRIS notes that the organiser scheduled 30 minutes of your time and took 53. This has not been discussed.',
+            'Focus block bisected. 23-minute recovery noted. IRIS notes that no one has told the organiser the actual cost of this meeting. IRIS notes you will not tell them either.',
+          ],
+        },
+        {
+          code: 'D',
+          text: 'It is at 8am on a Friday. The organiser has described themselves as "a morning person" on LinkedIn.',
+          score: 0,
+          comments: [
+            'Friday 8am. LinkedIn morning person. IRIS notes that being a morning person is a personal characteristic, not a scheduling mandate. The organiser has treated it as the latter.',
+            'IRIS has reviewed the organiser\'s LinkedIn profile. "Morning person" is listed. The 8am Friday invite has been issued. IRIS considers these facts related and the relationship unwelcome.',
+            'The organiser rises early. They have extended this preference to your Friday. IRIS notes that the appropriate response to being a morning person is to enjoy mornings, not to schedule them.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'q9b',
+      criterion: '9.1',
+      category: 'Temporal Displacement Assessment',
+      text: 'How much notice were you given for this meeting?',
+      options: [
+        {
+          code: 'A',
+          text: 'Sufficient. The invite arrived with time to prepare and decline if necessary.',
+          score: 3,
+          comments: [
+            'Sufficient notice. Preparation possible. Declination was an option. IRIS notes that a meeting you could have declined and chose to attend is a meeting attended with integrity.',
+            'Notice period compliant. You had time to prepare or refuse. Both options were available. This is the correct way to invite someone to a meeting.',
+            'Adequate notice confirmed. IRIS notes that notice is a form of respect. It was provided. IRIS records this without sarcasm.',
+          ],
+        },
+        {
+          code: 'B',
+          text: '47 minutes. The word "urgent" appears in the subject line. The topic is not urgent.',
+          score: 0,
+          comments: [
+            '"Urgent." 47 minutes notice. Topic assessed as non-urgent. IRIS notes that "urgent" is being used here to pre-empt the objection to the 47 minutes. IRIS notes the objection anyway.',
+            'The urgency classification is not supported by the topic. The 47 minutes is not supported by best practice. IRIS notes both misclassifications and moves on.',
+            'IRIS has reviewed the topic against the word "urgent." They are not in agreement. The 47-minute notice period suggests the organiser knew this and scheduled anyway.',
+          ],
+        },
+        {
+          code: 'C',
+          text: 'The invite was sent while you were in a different meeting. This is not a coincidence.',
+          score: 0,
+          comments: [
+            'The invite arrived during an existing meeting. IRIS agrees this is not a coincidence. Your calendar was visible. The gap after the meeting was identified. The invite was targeted.',
+            'Someone watched your calendar and found the moment when you could not immediately decline. IRIS notes the precision. IRIS does not note it with admiration.',
+            'IRIS has reviewed the invite timestamp relative to your calendar. The timing was specific. IRIS notes that specific timing of this kind is a scheduling technique. It has been used on you.',
+          ],
+        },
+        {
+          code: 'D',
+          text: 'The meeting is tomorrow. You are learning about it now because you read this tool instead of your email.',
+          score: 0,
+          comments: [
+            'IRIS is not an email client. You have been informed of tomorrow\'s meeting through a meeting compliance tool. IRIS recommends checking your inbox after this assessment.',
+            'The effective notice period has been reduced by the time spent completing this assessment. The meeting is still tomorrow. IRIS notes these facts without judgement. Mostly.',
+            'IRIS notes that discovering a meeting via a compliance tool rather than via the invite is an unusual information pathway. IRIS also notes the meeting remains on your calendar regardless.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'q9c',
+      criterion: '9.1',
+      category: 'Temporal Displacement Assessment',
+      text: 'What is the opportunity cost of attending this meeting?',
+      options: [
+        {
+          code: 'A',
+          text: 'Low. The meeting falls in a period of low-value tasks that can be deferred.',
+          score: 3,
+          comments: [
+            'Low opportunity cost. Deferrable tasks displaced. IRIS notes the meeting has been scheduled in a period where its cost is acceptable. This reflects good calendar management.',
+            'The displaced work can wait. The meeting cost is low. IRIS approves. This is the correct time to hold a meeting.',
+            'Opportunity cost confirmed as low. IRIS notes this is the ideal scheduling outcome. The meeting has been placed where it does the least damage to productive time.',
+          ],
+        },
+        {
+          code: 'B',
+          text: 'High. You are currently in a state of flow that has taken four days to achieve.',
+          score: 0,
+          comments: [
+            'Four days of accumulation will be interrupted. IRIS notes that the meeting did not know about the four days. It did not check. It is not equipped to care.',
+            'Flow state displacement confirmed. IRIS notes that four days of focus has a re-entry cost the organiser has not accounted for, because they were not informed of it, because no one asks.',
+            'The meeting interrupts something that took four days to build. The meeting will take 30 to 60 minutes. The rebuild will take 23 minutes minimum. No one will know.',
+          ],
+        },
+        {
+          code: 'C',
+          text: 'Significant. You will spend the hour before the meeting preparing and the hour after recovering.',
+          score: 0,
+          comments: [
+            'The meeting costs three hours. The invite says one. The difference has not been communicated to the organiser. IRIS notes that it will not be.',
+            'Preparation: one hour. Meeting: one hour. Recovery: one hour. The organiser has been informed of one of these. The cost they are unaware of is two-thirds of the total.',
+            'IRIS notes that a one-hour meeting with two hours of overhead is a three-hour commitment presented as a one-hour request. IRIS notes this is a common form of calendar fiction.',
+          ],
+        },
+        {
+          code: 'D',
+          text: 'The opportunity cost cannot be calculated because you have stopped being able to imagine what uninterrupted time feels like.',
+          score: 0,
+          comments: [
+            'The ability to imagine uninterrupted time has been lost. IRIS notes this is a late-stage finding. Please complete this assessment and then go outside. Not to a meeting. Outside.',
+            'IRIS has reviewed your response. The loss of uninterrupted time as a concept is a diagnostic indicator. IRIS is flagging your file. The flag is a small concern icon. It has been there for a while.',
+            'You cannot imagine uninterrupted time. IRIS notes this was not always true. IRIS notes the meetings are responsible. IRIS notes you have another one tomorrow.',
+          ],
+        },
+      ],
+    },
+  ],
+
+  // ── Criterion 10: Existential Necessity ──
+  [
+    {
+      id: 'q10a',
+      criterion: '10.1',
+      category: 'Existential Necessity Review',
+      text: 'In your considered professional judgement, what is the most accurate characterisation of why this meeting was called?',
+      options: [
+        {
+          code: 'A',
+          text: 'A specific problem exists. This meeting is the most efficient mechanism to resolve it.',
+          score: 3,
+          comments: [
+            'Problem identified. Meeting is the correct solution. IRIS notes this is the only justification IRIS accepts for a meeting. You have provided it. You may proceed.',
+            'Specific problem. Appropriate response. IRIS is satisfied. Please hold on to this feeling. Not every meeting will give it to you.',
+            'The meeting exists because something needs to be resolved and this is the best way to resolve it. IRIS notes this should be true of every meeting. IRIS notes how often it is not.',
+          ],
+        },
+        {
+          code: 'B',
+          text: 'The organiser is anxious and the meeting is how they manage it.',
+          score: 0,
+          comments: [
+            'The meeting is performing a therapeutic function for one person. That function is being distributed to all attendees as a calendar obligation. Consent was not sought.',
+            'Anxiety is a valid experience. A meeting is not the correct intervention. IRIS notes that the attendees are not therapists. They have been cast in this role without auditions.',
+            'IRIS notes that anxiety-driven meetings recur. Each one produces temporary relief for the organiser and a permanent calendar entry for everyone else. The pattern is self-sustaining.',
+          ],
+        },
+        {
+          code: 'C',
+          text: 'Visibility. Someone needs to be seen doing something. This meeting is that something.',
+          score: 0,
+          comments: [
+            'The meeting exists to produce the appearance of action. IRIS notes that appearance and action are different things. The calendar does not distinguish between them. Your time does.',
+            'All attendees are props in a visibility exercise. IRIS notes that being a prop is a legitimate role. It is just not usually what people mean when they say they have a meeting.',
+            'IRIS has reviewed visibility meetings. They are common, recurring, and difficult to challenge. The person generating visibility has more institutional support than anyone questioning the meeting. Including you.',
+          ],
+        },
+        {
+          code: 'D',
+          text: 'Unclear. The meeting exists because the previous meeting established that a meeting was needed.',
+          score: 0,
+          comments: [
+            'This meeting was produced by a meeting. IRIS has attempted to find the original meeting. The chain goes back further than IRIS expected. The original purpose is no longer visible.',
+            'A meeting created a meeting. That meeting created this one. IRIS notes that somewhere at the beginning of this chain, someone had a reason. That reason is not present in this room.',
+            'Meeting genealogy confirmed: third generation, minimum. IRIS notes that purpose is rarely inherited across more than one meeting generation. You are attending something whose purpose has passed.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'q10b',
+      criterion: '10.1',
+      category: 'Existential Necessity Review',
+      text: 'Complete the following sentence: "If I do not attend this meeting..."',
+      options: [
+        {
+          code: 'A',
+          text: '"...a decision will be made without critical input and the consequences will be measurable."',
+          score: 3,
+          comments: [
+            'Your absence produces measurable harm. IRIS confirms necessity. This is the correct reason to attend a meeting. Please attend.',
+            'Consequence of absence: specific, documented, unacceptable. IRIS notes you are load-bearing. Attend.',
+            'The meeting requires you. Without you it produces a worse outcome. IRIS accepts this as full justification. Proceed.',
+          ],
+        },
+        {
+          code: 'B',
+          text: '"...someone will notice and mention it in a way that is framed as concern."',
+          score: 0,
+          comments: [
+            'The consequence of your absence is social, not operational. IRIS notes that social consequences and operational requirements are different categories. One of them justifies attendance. It is not this one.',
+            '"Framed as concern." IRIS notes that concern framing is a specific communication technique. It has been used on you before. IRIS notes it will be used again if you do not attend.',
+            'Someone will notice. They will say something. It will sound like they care about you. IRIS notes they care about your attendance. These are different things.',
+          ],
+        },
+        {
+          code: 'C',
+          text: '"...nothing will change, but I will be asked to comment on the summary as though I had been there."',
+          score: 0,
+          comments: [
+            'Your attendance and your absence produce identical outcomes. IRIS notes that this means your invitation was courtesy, not necessity. IRIS notes this and updates your file.',
+            'You can attend or not attend. The result is the same. IRIS notes that the meeting has correctly assessed your operational value to it. It is zero. The invite was still sent.',
+            'Attendance optional. Outcome fixed. IRIS notes that a meeting you do not need to attend is a meeting you have been invited to attend anyway. Someone made that choice. IRIS notes it was not you.',
+          ],
+        },
+        {
+          code: 'D',
+          text: '"...the meeting will still happen. It always happens."',
+          score: 0,
+          comments: [
+            'The meeting does not require you. It requires a time slot. You happen to be in the time slot. IRIS notes this is the most honest framing of ornamental attendance IRIS has encountered today.',
+            'The meeting always happens. IRIS notes that meetings which always happen regardless of attendance are the most honest meetings. They do not pretend any specific person matters.',
+            'You are optional. The meeting is not. IRIS notes this distinction and finds it clarifying. It does not change the invite. It does change what you should do with it.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'q10c',
+      criterion: '10.1',
+      category: 'Existential Necessity Review',
+      text: 'What is your honest assessment of whether this meeting would have occurred regardless of whether you agreed to attend?',
+      options: [
+        {
+          code: 'A',
+          text: 'No. My attendance was a prerequisite for it being scheduled.',
+          score: 3,
+          comments: [
+            'The meeting required you to exist. IRIS confirms necessity. You are foundational. Attend.',
+            'Attendance as prerequisite confirmed. The meeting was conditional on you. IRIS notes this is the ideal relationship between a person and a meeting.',
+            'The meeting could not be scheduled without you. IRIS notes you are load-bearing. This is a good thing. It is the only good outcome in this criterion.',
+          ],
+        },
+        {
+          code: 'B',
+          text: 'Yes. My attendance was requested after the meeting was already confirmed.',
+          score: 0,
+          comments: [
+            'The meeting was confirmed before your attendance was sought. IRIS notes the sequence: meeting first, you second. You were added. You were not needed.',
+            'Post-confirmation invitation confirmed. The meeting committed to occurring before it considered whether you should be there. IRIS notes the order of operations.',
+            'You were invited to a meeting that had already decided to happen without you. IRIS notes that this is the most common form of ornamental attendance. It is rarely recognised as such.',
+          ],
+        },
+        {
+          code: 'C',
+          text: 'Yes. A version of this meeting has been happening quarterly since 2019. You are new. The meeting is not.',
+          score: 0,
+          comments: [
+            'The meeting predates you by several years. It will continue after you. You are a variable. The meeting is a constant. IRIS notes the distinction.',
+            'IRIS notes that you are attending a meeting that existed before you were relevant to it. It will exist after you are no longer relevant to it. You are currently in the middle.',
+            'The meeting has history. You are a recent addition to that history. The meeting was not consulted on your addition. Neither, in any meaningful sense, were you.',
+          ],
+        },
+        {
+          code: 'D',
+          text: 'The meeting predates the problem it was created to solve. It will outlast the solution.',
+          score: 0,
+          comments: [
+            'The meeting existed before the problem. The problem will be solved. The meeting will continue. IRIS notes this trajectory is correct. IRIS notes it without comfort.',
+            'Problem: temporary. Solution: eventual. Meeting: permanent. IRIS notes that the meeting is the most durable element in this scenario. It has planned accordingly.',
+            'IRIS notes that a meeting which predates its own purpose and will outlast its own solution has achieved institutional permanence. Challenging it is outside the scope of this assessment. And of most other things.',
+          ],
+        },
+      ],
+    },
+  ],
+]
+
+export function selectQuestions() {
+  return questionBank.map((slot) => slot[Math.floor(Math.random() * slot.length)])
+}
+
+export function pickComment(option) {
+  const comments = option.comments
+  return comments[Math.floor(Math.random() * comments.length)]
+}
