@@ -525,7 +525,7 @@ export const questionBank = [
           score: 0,
           comments: [
             'The purpose arrives at minute 45. A follow-up already exists. The organiser knew. They scheduled the follow-up before the meeting. They did not shorten the meeting.',
-            'IRIS notes that the correct response to "the purpose won't be reached in time" is to restructure the agenda. A pre-emptive follow-up is the other response.',
+            'IRIS notes that the correct response to "the purpose will not be reached in time" is to restructure the agenda. A pre-emptive follow-up is the other response.',
             '45 minutes of meeting before the meeting begins. IRIS notes that the follow-up was the correct meeting. This is not it. You are attending the wrong meeting. The right one is also already scheduled.',
           ],
         },
